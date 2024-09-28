@@ -10,14 +10,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotesDb.initialize();
 
-  runApp(
-
-    MultiProvider(providers:[
+  runApp(MultiProvider(
+    providers: [
       // Notes provider
       ChangeNotifierProvider(create: (context) => NotesDb()),
       // Theme Provider
       ChangeNotifierProvider(create: (context) => ThemeProvider()),
-    ] , child: const MainApp(),));
+    ],
+    child: const MainApp(),
+  ));
 }
 
 class MainApp extends StatelessWidget {
