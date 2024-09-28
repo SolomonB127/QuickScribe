@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_scribe/models/note_db.dart';
+import 'package:quick_scribe/theme/theme_provider.dart';
 
 import 'pages/notes_page.dart';
 
@@ -9,7 +10,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotesDb.initialize();
 
-  runApp(ChangeNotifierProvider(create: (context) => NotesDb(), child: const MainApp(),));
+  runApp(
+
+    MultiProvider(providers:[
+      // Notes provider
+      ChangeNotifierProvider(create: (context) => NotesDb()),
+      // Theme Provider
+      ChangeNotifierProvider(create: (context) => ThemeProvider()),
+    ] , child: const MainApp(),));
 }
 
 class MainApp extends StatelessWidget {
@@ -17,9 +25,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NotesPage()
+      home: const NotesPage(),
+      theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
 }
