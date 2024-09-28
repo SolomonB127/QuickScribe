@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:quick_scribe/components/drawer.dart';
 import 'package:quick_scribe/models/note_db.dart';
 import 'package:quick_scribe/models/notes.dart';
 
@@ -99,24 +100,21 @@ class _NotesPageState extends State<NotesPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: const Text("Notes"),
-        leading: Builder(
-            builder: (context) => IconButton(
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-                icon: const Icon(Icons.menu))),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Theme.of(context).colorScheme.inversePrimary
-      ),
+          title: const Text("Notes"),
+          leading: Builder(
+              builder: (context) => IconButton(
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  icon: const Icon(Icons.menu))),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          foregroundColor: Theme.of(context).colorScheme.inversePrimary),
       floatingActionButton: FloatingActionButton(
         onPressed: () => createNote,
         child: const Icon(Icons.add),
       ),
-      drawer: const Drawer(
-
-      ),
+      drawer: const MyDrawer(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
