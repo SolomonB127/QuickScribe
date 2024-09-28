@@ -112,12 +112,17 @@ class _NotesPageState extends State<NotesPage> {
           // List Ui
           return ListTile(
             title: Text(note.text),
-            trailing: const Row(
+            trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                // update
-
+                // edit
+                IconButton(
+                    onPressed: () => updateNote(note),
+                    icon: const Icon(Icons.edit)),
                 // delete
+                IconButton(
+                    onPressed: () => deleteNote(note.id),
+                    icon: const Icon(Icons.delete))
               ],
             ),
           );
