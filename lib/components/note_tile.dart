@@ -6,7 +6,11 @@ class NoteTile extends StatelessWidget {
   final String text;
   final void Function()? onEditPressed;
   final void Function()? onDeletePressed;
-  const NoteTile({super.key, required this.text, required this.onEditPressed, required this.onDeletePressed});
+  const NoteTile(
+      {super.key,
+      required this.text,
+      required this.onEditPressed,
+      required this.onDeletePressed});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +20,21 @@ class NoteTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(8)),
       margin: const EdgeInsets.only(top: 10, left: 25, right: 25),
       child: ListTile(
-        title: Text(
-          text,
-        ),
-        trailing:IconButton(onPressed: () => showPopover(context: context, bodyBuilder: (content) => const NotesSettings()), icon: const Icon(Icons.more_vert))
-      ),
+          title: Text(
+            text,
+          ),
+          trailing: Builder(
+              builder: (context) => IconButton(
+                  onPressed: () => showPopover(
+                      width: 100,
+                      height: 100,
+                      backgroundColor: Theme.of(context).colorScheme.surface,
+                      context: context,
+                      bodyBuilder: (content) => NotesSettings(
+                            onEditTap: onEditPressed,
+                            onDeleteTap: onDeletePressed,
+                          )),
+                  icon: const Icon(Icons.more_vert)))),
     );
   }
 }
