@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_scribe/components/drawer.dart';
+import 'package:quick_scribe/components/note_tile.dart';
 import 'package:quick_scribe/models/note_db.dart';
 import 'package:quick_scribe/models/notes.dart';
 
@@ -29,6 +30,7 @@ class _NotesPageState extends State<NotesPage> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
+              backgroundColor: Theme.of(context).colorScheme.surface,
               content: TextField(
                 controller: _createController,
               ),
@@ -62,6 +64,7 @@ class _NotesPageState extends State<NotesPage> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
+              backgroundColor: Theme.of(context).colorScheme.surface,
               title: const Text("Update Note."),
               content: TextField(
                 controller: _createController,
@@ -111,8 +114,12 @@ class _NotesPageState extends State<NotesPage> {
           backgroundColor: Colors.transparent,
           foregroundColor: Theme.of(context).colorScheme.inversePrimary),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.primary,
         onPressed: () => createNote,
-        child: const Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).colorScheme.inversePrimary,
+        ),
       ),
       drawer: const MyDrawer(),
       body: Column(
@@ -137,21 +144,10 @@ class _NotesPageState extends State<NotesPage> {
                 final note = currentNote[index];
 
                 // List Ui
-                return ListTile(
-                  title: Text(note.text),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      // edit
-                      IconButton(
-                          onPressed: () => updateNote(note),
-                          icon: const Icon(Icons.edit)),
-                      // delete
-                      IconButton(
-                          onPressed: () => deleteNote(note.id),
-                          icon: const Icon(Icons.delete))
-                    ],
-                  ),
+                return NoteTile(
+                  text: note.text,
+                  onEditPressed: () => updateNote(note),
+                  onDeletePressed: () => deleteNote(note.id),
                 );
               },
             ),
