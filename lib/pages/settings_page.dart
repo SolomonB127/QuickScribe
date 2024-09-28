@@ -17,9 +17,8 @@ class SettingsPage extends StatelessWidget {
       ),
       body: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(12)
-        ),
+            color: Theme.of(context).colorScheme.primary,
+            borderRadius: BorderRadius.circular(12)),
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
         margin: const EdgeInsets.only(top: 10),
         child: Row(
@@ -32,11 +31,11 @@ class SettingsPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.inversePrimary),
             ),
-        
+
             // toggle switch
             CupertinoSwitch(
-                value:
-                    Provider.of<ThemeProvider>(context, listen: false).isDarkMode,
+                value: Provider.of<ThemeProvider>(context, listen: false)
+                    .isDarkMode,
                 onChanged: (value) =>
                     Provider.of<ThemeProvider>(context, listen: false)
                         .toggleTheme())
