@@ -13,6 +13,15 @@ class NotesPage extends StatefulWidget {
 class _NotesPageState extends State<NotesPage> {
   // text controller for tracking text strokes
   final _createController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+// on app start-up, fetch existing notes
+    readNotes();
+  }
+
   // create a note
   void createNote() {
     showDialog(
@@ -27,6 +36,9 @@ class _NotesPageState extends State<NotesPage> {
                   onPressed: () {
                     // add to db
                     context.read<NotesDb>().addNote(_createController.text);
+
+                    // clear controller
+                    _createController.clear();
                     // pop dialog box
                     Navigator.pop(context);
                   },
@@ -38,12 +50,44 @@ class _NotesPageState extends State<NotesPage> {
 
   // read a note
   void readNotes() {
-    context.watch<NotesDb>().fetchNotes();
+    context.read<NotesDb>().fetchNotes();
   }
 
   // update a note
+  void updateNote(Note note) {
+    // pre-fill current note text
+    _createController.text = note.text;
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text("Update Note."),
+              content: TextField(
+                controller: _createController,
+              ),
+              actions: <Widget>[
+                // update button
+                MaterialButton(
+                  onPressed: () {
+                    context
+                        .read<NotesDb>()
+                        .updateNotes(note.id, _createController.text);
+                    // clear controller
+                    _createController.clear();
+
+                    // pop dialog
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Update"),
+                )
+              ],
+            ));
+  }
 
   // delete a note
+  void deleteNote(int id) {
+    context.read<NotesDb>().deleteNote(id);
+  }
+
   @override
   Widget build(BuildContext context) {
     // notes DB
@@ -68,6 +112,14 @@ class _NotesPageState extends State<NotesPage> {
           // List Ui
           return ListTile(
             title: Text(note.text),
+            trailing: const Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                // update
+
+                // delete
+              ],
+            ),
           );
         },
       ),
