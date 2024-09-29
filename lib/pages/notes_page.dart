@@ -103,7 +103,6 @@ class _NotesPageState extends State<NotesPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-          title: const Text("Notes"),
           leading: Builder(
               builder: (context) => IconButton(
                   onPressed: () {
@@ -114,8 +113,8 @@ class _NotesPageState extends State<NotesPage> {
           backgroundColor: Colors.transparent,
           foregroundColor: Theme.of(context).colorScheme.inversePrimary),
       floatingActionButton: FloatingActionButton(
+        onPressed: createNote,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        onPressed: () => createNote,
         child: Icon(
           Icons.add,
           color: Theme.of(context).colorScheme.inversePrimary,
